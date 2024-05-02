@@ -30,7 +30,13 @@ The typical approach of using `getUser` once in middleware and then relying on `
 
 ### Setup
 
-2. Create a Supabase server client and initialize `AuthManager`:
+2. Install the package:
+
+```bash
+npm i supabase-safesession
+```
+
+3. Create a Supabase server client and initialize `AuthManager`:
 
 ```typescript
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
@@ -75,7 +81,7 @@ export const supabaseServerAuth = new AuthManager(
 );
 ```
 
-3. use `AuthManager` inside your server components:
+4. use `AuthManager` inside your server components:
 
 ```typescript
 export default async function ExampleComponent() {
