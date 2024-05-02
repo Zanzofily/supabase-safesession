@@ -1,0 +1,46 @@
+{
+  "name": "supabase-safesession",
+  "version": "0.1.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup --config tsup.config.ts",
+    "lint": "tsc --noEmit",
+    "prepublish": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zanzofily/supabase-safesession.git"
+  },
+  "keywords": [
+    "Supabase",
+    "Auth",
+    "Next.js",
+    "Server Components"
+  ],
+  "author": "Zanzofily",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zanzofily/supabase-safesession/issues"
+  },
+  "homepage": "https://github.com/zanzofily/supabase-safesession#readme",
+  "dependencies": {
+    "jsonwebtoken": "^9.0.2"
+  },
+  "devDependencies": {
+    "@types/cookie": "^0.5.1",
+    "@types/jsonwebtoken": "^9.0.6",
+    "tsup": "^8.0.2",
+    "typescript": "^5"
+  },
+  "peerDependencies": {
+    "@supabase/supabase-js": "^2",
+    "next": "^13"
+  }
+}
