@@ -41,6 +41,6 @@
   },
   "peerDependencies": {
     "@supabase/supabase-js": "^2",
-    "next": "^13"
+    "next": "^13 || ^14"
   }
 }
