@@ -12,3 +12,5 @@ node_modules/
 .npm
 # VisualStudioCode
 .vscode/
+# Build folder
+dist/
