@@ -22,23 +22,25 @@ class AuthManager {
    * @returns {AuthTokens | null} AuthTokens if found and correctly parsed, null otherwise.
    */
   private getAuthTokensFromCookies(): AuthTokens | null {
-    const cookieNameRegex = /^sb-[a-z]+-auth-token$/;
-    const authCookie = cookies()
+    const cookieNameRegex = /^sb-[a-z]+-auth-token.*$/
+    const authCookies = cookies()
       .getAll()
-      .find((cookie) => cookieNameRegex.test(cookie.name));
-
-    if (!authCookie) {
-      return null;
+      .filter((cookie) => cookieNameRegex.test(cookie.name))
+      .sort((a, b) => a.name.localeCompare(b.name))
+    if (!authCookies) {
+      return null
     }
 
+    const authCookieValue = authCookies.map((cookie) => cookie.value).join("")
+
     try {
-      const session = JSON.parse(decodeURIComponent(authCookie.value));
+      const session = JSON.parse(decodeURIComponent(authCookieValue))
       return {
         access_token: session.access_token,
         refresh_token: session.refresh_token,
-      };
+      }
     } catch (error) {
-      return null;
+      return null
     }
   }
 
