@@ -72,13 +72,10 @@ export function createSupabaseServerClient() {
     }
   );
 }
-
 // Export the initialized Supabase client and AuthManager
-export const supabaseServerClient = createSupabaseServerClient();
-export const supabaseServerAuth = new AuthManager(
-  supabaseServerClient,
-  process.env.SUPABASE_JWT_SECRET!
-);
+export const supabaseServerClient = () => createSupabaseServerClient();
+export const supabaseServerAuth = () =>
+  new AuthManager(supabaseServerClient(), process.env.SUPABASE_JWT_SECRET!);
 ```
 
 4. use `AuthManager` inside your server components:
