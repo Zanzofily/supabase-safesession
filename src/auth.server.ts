@@ -48,12 +48,14 @@ class AuthManager {
    * Verifies the JWT token, refreshes it if expired, and returns user data.
    * @returns {Promise<AuthResponse>} The user session data if successful, or an error message.
    */
-  public async getSafeSession(): Promise<AuthResponse> {
+  public async getSafeSession(
+    refresh: boolean = false,
+  ): Promise<AuthResponse> {
     const tokens = this.getAuthTokensFromCookies();
     if (!tokens) {
       return { status: "error", error: "Authentication tokens not found" };
     }
-    return this.parseAndVerifySession(tokens);
+    return this.parseAndVerifySession(tokens, refresh);
   }
 
   /**
@@ -62,7 +64,8 @@ class AuthManager {
    * @returns {Promise<AuthResponse>} The decoded JWT payload or an error.
    */
   private async parseAndVerifySession(
-    tokens: AuthTokens
+    tokens: AuthTokens,
+    refresh: boolean = false
   ): Promise<AuthResponse> {
     try {
       const session = jwt.verify(
@@ -71,11 +74,10 @@ class AuthManager {
       ) as SupabaseJwtPayload;
       return { status: "success", data: { ...session, id: session.sub } };
     } catch (error) {
-      if (error instanceof jwt.TokenExpiredError) {
+      if (error instanceof jwt.TokenExpiredError && refresh) {
         return this.refreshSession(tokens);
-      } else {
-        return { status: "error", error: "JWT verification failed" };
       }
+      return { status: "error", error: "JWT verification failed" };
     }
   }
 
