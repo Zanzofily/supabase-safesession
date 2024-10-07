@@ -81,12 +81,15 @@ export const supabaseServerAuth = () =>
 4. use `AuthManager` inside your server components:
 
 ```typescript
+const autoRefreshToken = true;
+
 export default async function ExampleComponent() {
+  // autoRefreshToken is optional with a default value of false
   const {
     data: session,
     status,
     error,
-  } = await supabaseServerAuth.getSafeSession();
+  } = await supabaseServerAuth.getSafeSession(autoRefreshToken);
 
   // Implement component logic using the session data
   return <div>User session status: {status}</div>;
