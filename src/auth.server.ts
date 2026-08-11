@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import jwt from "jsonwebtoken";
+import { jwtVerify } from "jose";
 import { SupabaseClient } from "@supabase/supabase-js";
 import { AuthResponse, AuthTokens, SupabaseJwtPayload } from "./types";
 
@@ -68,13 +68,13 @@ class AuthManager {
     refresh: boolean = false
   ): Promise<AuthResponse> {
     try {
-      const session = jwt.verify(
+      const { payload } = await jwtVerify(
         tokens.access_token,
-        this.jwtSecret
-      ) as SupabaseJwtPayload;
-      return { status: "success", data: { ...session, id: session.sub } };
-    } catch (error) {
-      if (error instanceof jwt.TokenExpiredError && refresh) {
+        new TextEncoder().encode(this.jwtSecret)
+      );
+      return { status: "success", data: { ...payload, id: (payload.sub as string) } };
+    } catch (error: any) {
+      if (error.name === "JWTExpired" && refresh) {
         return this.refreshSession(tokens);
       }
       return { status: "error", error: "JWT verification failed" };
