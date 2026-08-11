@@ -31,11 +31,10 @@
   },
   "homepage": "https://github.com/zanzofily/supabase-safesession#readme",
   "dependencies": {
-    "jsonwebtoken": "^9.0.2"
+    "jose": "^5.2.0"
   },
   "devDependencies": {
     "@types/cookie": "^0.5.1",
-    "@types/jsonwebtoken": "^9.0.6",
     "tsup": "^8.0.2",
     "typescript": "^5"
   },

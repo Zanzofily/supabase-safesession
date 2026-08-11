@@ -1,5 +1,3 @@
-import { JwtPayload } from "jsonwebtoken";
-
 import {
   UserAppMetadata,
   UserMetadata,
@@ -12,7 +10,7 @@ export type AuthTokens = {
   refresh_token: string;
 };
 
-export interface SupabaseJwtPayload extends JwtPayload {
+export interface SupabaseJwtPayload extends Record<string, any> {
   sub: string;
   id: string;
   aud: string;
